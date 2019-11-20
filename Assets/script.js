@@ -4,7 +4,7 @@ var startBtn = document.querySelector("#startBtn");
 var ansOptions = document.querySelector("#ansOptions");
 var question = document.querySelector("#question");
 var result = document.querySelector("#result");
-
+var timer = document.querySelector("#timer");
 var questions = [
     {
         title: "Commonly used data types DO NOT include:",
@@ -34,13 +34,20 @@ var questions = [
 ];
 
 //variable to save correct answer count, remaining time
-var timeTaken = 0;
+// var timeTaken = 0;
 var timeTakenForQuestion = 0;
 var questionIndex = 0;
+var timeTaken = 0;
+var score = 0;
 
 
-function startTimer(){
-    console.log("start Timer");
+var timeElapsed = "";
+
+function startTimer() {
+    timeElapsed = setInterval(function () {
+        timeTaken = timeTaken + 1;
+        timer.textContent = timeTaken;
+    }, 1000);
 }
 //start quiz loop through the questions
 startBtn.addEventListener("click", function (event) {
@@ -70,9 +77,10 @@ function finalScore() {
 }
 
 function nextQuestion() {
-    
+
     questionIndex++;
     if (questionIndex > questions.length - 1) {
+        clearInterval(timeElapsed);
         finalScore();
     }
     else {
@@ -80,12 +88,12 @@ function nextQuestion() {
     }
 }
 
-function clearQuestion(){
+function clearQuestion() {
     result.textContent = "";
-    question.innerHTML ="";
+    question.innerHTML = "";
     while (ansOptions.firstChild) {
         ansOptions.removeChild(ansOptions.firstChild);
-      }
+    }
 }
 
 function verifyUserAnswer(event) {
@@ -109,15 +117,16 @@ function verifyUserAnswer(event) {
     else {
         // console.log(indexOfAnswer + " : index: " + ansIndux + " :wrong");
         resultOfQuestion = "Wrong Answer"
+        timeTaken = timeTaken + 15;
     }
     //show answer for two seconds
     result.textContent = resultOfQuestion;
 
-    var secondsDelay2 = setInterval(function(){ 
+    var secondsDelay2 = setInterval(function () {
         clearInterval(secondsDelay2);
-        clearQuestion(); 
-        nextQuestion();       
-    }, 2000);    
+        clearQuestion();
+        nextQuestion();
+    }, 2000);
 }
 
 //User clicks answer
