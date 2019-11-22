@@ -10,7 +10,13 @@ label, input,textarea, p{
 body {
     background-image: url(circuit.png);
 }
+.buttonOpt{
+    margin: 2px;
+}
 
+.button{
+    margin-top: 5px;
+}
 .container{
     background: white;
     margin-top: 50px;
@@ -35,25 +41,61 @@ body {
 }
 
 @media (max-width: 768px){
-    .button{
+    .button, .buttonOpt, p, input{
         font-size: 12px;
+    }
+    h1{
+        font-size: 1.5rem;
+    }
+    h3{
+        font-size: 1.25rem;
+    }
+    h5{
+        font-size: 1rem;
     }
 }
 
 @media (max-width: 568px){
-    .button{
+    .button, .buttonOpt, p, input{
         font-size: 16px;
+    }
+    h1{
+        font-size: 1.25rem;
+    }
+    h3{
+        font-size: 1rem;
+    }
+    h5{
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 320px){
-    .button{
+    .button, .buttonOpt, p, input{
         font-size: 12px;
+    }
+    h1{
+        font-size: 1.25rem;
+    }
+    h3{
+        font-size: 1rem;
+    }
+    h5{
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 200px){
-    .button{
+    .button, .buttonOpt, p, input{
         font-size: 10px;
+    }
+    h1{
+        font-size: 1.25rem;
+    }
+    h3{
+        font-size: 1rem;
+    }
+    h5{
+        font-size: 0.75rem;
     }
 }
