@@ -33,6 +33,7 @@ var saveToMemory = document.querySelectorAll(".saveToMemory");
 //message spans
 
 var rslt = document.querySelector("#rslt");
+var score = document.querySelector("#score");
 
 //declaring global variables
 var timeRemaining = 75;
@@ -43,7 +44,7 @@ var questionIndex = 0;
 
 //Hide all the questions and messages
 
-function hideAll() {
+function hideAllSections() {
     for (var j = 0; j < questionArray.length; j++) {
         for (var i = 0; i < questionArray[j].length; i++) {
             questionArray[j][i].style.display = "none";
@@ -70,35 +71,43 @@ function hideAll() {
 }
 
 //Hiding all the questions for first screen
-hideAll();
+hideAllSections();
 
-//function result to user
-function showAnswer(msg) {
-    //showing the result section
+
+
+function showInitialScreen() {
+    for (var i = 0; i < startMsg.length; i++) {
+        startMsg[i].style.display = "block";
+    };
+    // hide start question button
+
+    for (var i = 0; i < startBtn.length; i++) {
+        startBtn[i].style.display = "block";
+    };
+}
+
+function hideInitialScreen() {
+    for (var i = 0; i < startMsg.length; i++) {
+        startMsg[i].style.display = "none";
+    };
+    // hide start question button
+
+    for (var i = 0; i < startBtn.length; i++) {
+        startBtn[i].style.display = "none";
+    };
+}
+
+function hideResultSection() {
+    for (var i = 0; i < result.length; i++) {
+        result[i].style.display = "none";
+    }
+}
+
+function showResultSection() {
     for (var i = 0; i < result.length; i++) {
         result[i].style.display = "block";
-    };
-
-    rslt.innerHTML = msg;
-    // var d = new Date();
-
-    var secondsDelay2 = setInterval(function () {
-        //hiding after showing result for 2 seconds
-        clearInterval(secondsDelay2);
-        clearResult();
-        hideQuestion();
-        nextQuestion();
-    }, 2000);
-
-    function clearResult() {
-        for (var i = 0; i < result.length; i++) {
-            result[i].style.display = "none";
-        }
     }
-
-
-};
-
+}
 //hide question
 function hideQuestion() {
     var question = questionArray[questionIndex];
@@ -113,61 +122,92 @@ function showQuestion() {
         question[i].style.display = "block";
     };
 }
-
+//show save to memory section
+function showSaveToMemorySection(){
+    for (var i = 0; i < saveToMemory.length; i++) {
+        saveToMemory[i].style.display = "block";
+    }
+}
+//hide save to memory section
+function hideSaveToMemorySection(){
+    for (var i = 0; i < saveToMemory.length; i++) {
+        saveToMemory[i].style.display = "none";
+    }
+}
 
 //save the result
 function saveResult() {
-    console.log("save result");
+    // console.log("save result");
+    showInitialScreen();
+    startButton.textContent = "Retake Quiz";
+    showSaveToMemorySection();
+    score.textContent = timeRemaining;
+    var scoreToSave = timeRemaining;
+    timeRemaining = 75;
+    questionIndex = 0;
 }
 
 function nextQuestion() {
-    questionIndex++;
-
-    if (questionIndex < questionArray.length) {
         showQuestion();
         addEventListenerToButtons(questionIndex);
+}
+
+var quizTimer = setInterval(function () {
+    timerSection.textContent = timeRemaining;
+    timeRemaining--;
+}, 1000);
+
+
+function programExecution() {
+    if (questionIndex < questionArray.length && timeRemaining > 0) {
+        // show first question
+        nextQuestion();
+    }   
+    //stop timer when time remaining is 0
+    if (timeRemaining <= 0) {
+        clearInterval(quizTimer);
+        hideQuestion();
+        // show warning section
+        for (var i = 0; i < warning.length; i++) {
+            warning[i].style.display = "block";
+        }
+        hideResult();
+        saveResult();
     }
-    else {
+    
+    // stop timer, when all the question finished
+    if (questionIndex >= questionArray.length) {
+        clearInterval(quizTimer);
         saveResult();
     }
 }
 
-function startTimer() {
-    var quizTimer = setInterval(function () {
-        timerSection.textContent = timeRemaining;
-        timeRemaining--;
-        if (timeRemaining < 0) {
-            timeRemaining == 0;
-            clearInterval(quizTimer);
-            hideQuestion();
-            // Hiding warning section
-            for (var i = 0; i < warning.length; i++) {
-                warning[i].style.display = "block";
-            }
-        }
-    }, 1000);
-}
+
 
 // start the quiz
 startButton.addEventListener("click", function (event) {
-
-    //  hide initial screen
-    for (var i = 0; i < startMsg.length; i++) {
-        startMsg[i].style.display = "none";
-    };
-    // hide start question button
-
-    for (var i = 0; i < startBtn.length; i++) {
-        startBtn[i].style.display = "none";
-    };
-
-    // show first question
-    showQuestion();
-    startTimer();
-    addEventListenerToButtons(questionIndex);
-
+    //  hide initial screen and button
+    hideInitialScreen();
+    hideSaveToMemorySection();
+    quizTimer;
+    programExecution();
 });
 
+//function result to user
+function showAnswer(msg) {
+    //showing the result section
+    showResultSection();
+    rslt.innerHTML = msg;
+    var secondsDelay2 = setInterval(function () {
+        //hiding after showing result for 2 seconds
+        clearInterval(secondsDelay2);
+        hideResultSection();
+        hideQuestion();
+        questionIndex++;
+        programExecution();
+    }, 2000);
+
+};
 
 function checkAnswers(clickEvent) {
     // console.log("button");
@@ -190,39 +230,25 @@ function addEventListenerToButtons(index) {
             //disabled buttin to prevent double click
             clickEvent.disabled = true;
 
-            var lists = ansButtonList[index].childNodes;
+            // This section is for removing the different button clicks for same question
+            // var lists = ansButtonList[index].childNodes;
 
-            for (var i = 0; i < lists.length; i++) {
-                var elementList = lists[i].childNodes
-                console.log(elementList);
-                for (var j = 0; j < elementList.length; j++) {
-                    //if (elementList[j].hasChildNodes()) {
-                        // var buttonElements = elementList[j].childNodes;
-                        // console.log(buttonElements);
-                    //}
-
-
-                }
-
-            }
-
-
-
-
-
-
-            // // console.log("button");
-            // if (clickEvent.classList.contains("correct")) {
-            //     showAnswer("correct");
+            // for (var i = 0; i < lists.length; i++) {
+            //     var elementList = lists[i].childNodes
+            //     console.log(elementList);
+            //     for (var j = 0; j < elementList.length; j++) {
+            //         //if (elementList[j].hasChildNodes()) {
+            //             // var buttonElements = elementList[j].childNodes;
+            //             // console.log(buttonElements);
+            //         //}
+            //     }
             // }
-            // else {
-            //     showAnswer("wrong");
-            //     timeRemaining = timeRemaining - 15;
-            // }
+
 
             //moved out in to a function
 
             checkAnswers(clickEvent);
+            clickEvent.disabled = false;
         }
         else {
             alert("click the answer buttons!..")
