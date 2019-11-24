@@ -222,7 +222,7 @@ saveBtn.addEventListener("click", function (event) {
         }
 
         localStorage.setItem("scoreObject", JSON.stringify(scoreObjectArray));
-        scoreToSave == 0;
+        scoreToSave = 0;
         event.stopPropagation();
         saveBtn.disabled = false;
         hideSaveToMemorySection();
@@ -371,7 +371,7 @@ function addEventListenerToButtons(index) {
             //disabled buttin to prevent double click
             clickEvent.disabled = true;
 
-            // This section is for removing the different button clicks for same question
+            // This section is for removing different button click events for same question
             // var lists = ansButtonList[index].childNodes;
 
             // for (var i = 0; i < lists.length; i++) {
