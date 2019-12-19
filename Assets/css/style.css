@@ -8,7 +8,7 @@ label, input,textarea, p{
 }
 
 body {
-    background-image: url(circuit.png);
+    background-image: url(../img/circuit.png);
 }
 .buttonOpt{
     margin: 2px;
