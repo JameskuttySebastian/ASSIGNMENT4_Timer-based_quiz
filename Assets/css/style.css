@@ -7,9 +7,7 @@ label, input,textarea, p{
     text-decoration: none;
 }
 
-body {
-    background-image: url(../img/circuit.png);
-}
+
 .buttonOpt{
     margin: 2px;
 }
@@ -17,7 +15,9 @@ body {
 hr{
     padding: 10px;
 }
-
+body {
+    background-image: url(../img/circuit.png);
+}
 
 #startButton,
  #viewHighScoreButton,
