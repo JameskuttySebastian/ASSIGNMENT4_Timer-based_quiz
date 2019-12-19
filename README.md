@@ -9,11 +9,6 @@
 -  Github Pages
 > https://jameskuttysebastian.github.io/ASSIGNMENT4_Timer-based_quiz/
 
- 
- ## This application works as follows
-
- ![picture alt](assets/img/question.png "Home Page")
-
 
 ###  Features
 
