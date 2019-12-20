@@ -16,12 +16,12 @@ The application has following features
 
 1. It can loop through questions multiple times
 
-![picture alt](./assets/img/question.png "Question Page")
+![picture alt](assets/img/question.png "Question Page")
 
 2. User could save result to local memory
 
-![picture alt](./assets/img/savescore.png "Save score")
+![picture alt](assets/img/savescore.png "Save score")
 
 3. User could view highist score
 
-![picture alt](./assets/img/highestscore.png "View highest score")
+![picture alt](assets/img/highestscore.png "View highest score")
